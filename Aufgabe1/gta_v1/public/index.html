@@ -27,9 +27,19 @@
 
             <!-- ############### VS1Lab 1a Form 1 Start -->
             <form id="tag-form" action="/tagging" method="post">
-
-                <!-- ... your code here ... -->
-
+                <fieldset style="text-align:left">
+                    <legend>Add a new GeoTag</legend>
+                    <label for="latitude">Latitude</label>
+                    <input type="number" name="latitude" id="latitude" placeholder="50.37825" disabled/>
+                    <label for="longitude">Longitude</label>
+                    <input type="number" name="longitude" id="longitude" placeholder="9.46281" disabled/>
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" placeholder="e.g. Central Berlin" pattern="[A-Z|a-z]+" maxlength="10"/>
+                    <label for="hashtag">Hashtag</label>
+                    <input type="text" name="hashtag" id="hashtag" placeholder="e.g. #ber" pattern="#[A-Z]+" maxlength="11"/>
+                    <input type="submit" name="submit" value="Add tag"/>
+                    <!-- ... your code here ... -->
+                </fieldset>
             </form>
             <!-- ############### VS1Lab 1a Form 1 End -->
 
@@ -40,9 +50,13 @@
 
             <!-- ############### VS1Lab 1a Form 2 Start -->
             <form class="discovery__search" id="discoveryFilterForm" action="/discovery" method="post">
-
+                <fieldset>
+                    <legend>Search</legend>
+                    <label for="search">Search</label>
+                    <input type="text" name="search" placeholder="Searchterm"/>
+                <input type="submit" value="Search"/>
                 <!-- ... your code here ... -->
-
+                </fieldset>
             </form>
             <!-- ############### VS1Lab 1a Form 2 End -->
 

@@ -45,7 +45,9 @@ a {
 }
 
 /* ### TODO ### Styles for other HTML elements */
-
+input{
+  display: block;
+}
 /* ... your code here ... */
 
 
