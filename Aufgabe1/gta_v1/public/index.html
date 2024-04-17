@@ -27,9 +27,26 @@
 
             <!-- ############### VS1Lab 1a Form 1 Start -->
             <form id="tag-form" action="/tagging" method="post">
+                <fieldset>
+                    <legend>Tagging</legend>
 
-                <!-- ... your code here ... -->
+                    <label for="latitude">Latitude:</label>
+                    <input type="text" id="latitude" placeholder="49.01379" pattern="[0-9]+(\.[0-9]+)" required/>
 
+                    <label for="longitude">Longitude:</label>
+                    <input type="text" id="longitude" placeholder="8.390071" pattern="[0-9]+(\.[0-9]+)" required/>
+
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" placeholder="e.g. Central Berlin" pattern="[A-Z]+" maxlength="10" required/>
+
+                    <label for="hashtag">Hashtag:</label>
+                    <input type="text" id="hashtag" placeholder="e.g. #ber" pattern="#[a-z]+" maxlength="10"/>
+
+
+                </fieldset>
+
+                <button type="submit">Add Tag</button>
+                
             </form>
             <!-- ############### VS1Lab 1a Form 1 End -->
 
@@ -40,8 +57,22 @@
 
             <!-- ############### VS1Lab 1a Form 2 Start -->
             <form class="discovery__search" id="discoveryFilterForm" action="/discovery" method="post">
+                <fieldset>
+                    <legend>Discovery</legend>
 
-                <!-- ... your code here ... -->
+                    <label for="searchterm">Search term or keywords:</label>
+                    <input type="hidden" id="searchterm" placeholder="e.g. Berlin" pattern="[A-Z]+"/>
+
+                    <label for="latitude">Latitude:</label>
+                    <input type="hidden" id="latitude" placeholder="49.01379" pattern="[0-9]+"/>
+
+                    <label for="longitude">Longitude:</label>
+                    <input type="hidden" id="longitude" placeholder="8.390071" pattern="[0-9]"/>
+                
+
+                </fieldset>
+
+                <button type="submit">Search</button>
 
             </form>
             <!-- ############### VS1Lab 1a Form 2 End -->
