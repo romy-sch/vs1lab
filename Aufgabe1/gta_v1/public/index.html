@@ -22,35 +22,56 @@
     </header>
 
     <main class="main">
-        <section class="main__tagging tagging">
-            <h2>Tagging</h2>
+        <section class="main__taggingtagging">
+            <h2 class="tagging__title">Tagging</h2>
 
             <!-- ############### VS1Lab 1a Form 1 Start -->
             <form id="tag-form" action="/tagging" method="post">
-
                 <!-- ... your code here ... -->
+                
+                <fieldset>
+                    <legend>Add a new GeoTag</legend>
+                    
+                    <label>Latitude: <input type="text" name="latitude" id="latitude_input" placeholder="e.g. 52.52000"  maxlength=8 pattern="[0-9][0-9]\.?[0-9]+" /></label>
 
+                    <label>Longitude: <input type="text" name="longitude" id="longitude_input" placeholder="e.g. 13.40459" maxlength=8 pattern="[0-9][0-9]*\.?[0-9]+" /></label>
+
+                    <label>Name: <input type="text" name="name" id="name_input" placeholder="e.g. Central Berlin" minlength=3 maxlength=10 pattern="[A-z]\w+ ?[A-z]\w+" required/></label>
+
+                    <label>Hashtag: <input type="text" name="hashtag" id="hashtag_input" placeholder="e.g. #ber" minlength=3 maxlength=11  pattern="#[a-z]*" optional/></label>
+                    
+                    <input type="submit" value="Add Tag">
+                
+                </fieldset>
+                
             </form>
             <!-- ############### VS1Lab 1a Form 1 End -->
-
+            
         </section>
 
-        <section class="main__discovery discovery">
+        <section class="main__discoverydiscovery">
             <h2 class="discovery__title">Discovery</h2>
 
             <!-- ############### VS1Lab 1a Form 2 Start -->
             <form class="discovery__search" id="discoveryFilterForm" action="/discovery" method="post">
 
                 <!-- ... your code here ... -->
-
+                
+                <fieldset>
+                    <legend>Search</legend>
+                    <label>Search term or keywords: <input type="text" name="search" id="search_input" placeholder="e.g. Berlin"  maxlength=10 pattern="[A-z]\w+ ?[A-z]\w+" /></label>
+                    
+                    <input type="submit" value="Search">
+                </fieldset>
+                
             </form>
             <!-- ############### VS1Lab 1a Form 2 End -->
 
             <div class="discovery__wrapper">
                 <div class="discovery__taglist">
                     <ul class="discovery__results" id="discoveryResults">
-                        <li>Castle (49.01379, 8.404435) #sight</li>
-                        <li>IWI (49.01379, 8.390071) #edu</li>
+                        <li>Castle (49.01379, 8.404435) <span></span>#sight</li>
+                        <li>IWI (49.01379, 8.390071) <span></span>#edu</li>
                     </ul>
                 </div>
 

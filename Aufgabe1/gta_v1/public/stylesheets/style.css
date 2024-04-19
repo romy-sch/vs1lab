@@ -48,7 +48,6 @@ a {
 
 /* ... your code here ... */
 
-
 /* Grid styles (no changes required) */
 
 .row {
@@ -110,25 +109,133 @@ a {
 /* ### TODO ### Styles for Header Component */
 
 /* ... your code here ... */
+.header__image{
+  height: 50px;
+}
+
+
+.header{
+  padding: 4%;
+  display: flex;
+  flex-flow: nowrap row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom:2px solid #cdcdcd;
+  background-color: #efefef;
+}
 
 
 /* ### TODO ### Styles for Main Component */
 
 /* ... your code here ... */
 
+.main{
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 3%;
+  gap: 3%
+  
+}
+.main__taggingtagging{
+  flex: 1;
+}
+.main__discoverydiscovery{
+  flex:3;
+}
+
 
 /* ### TODO ### Styles for Tagging component */
+fieldset label{
+  color: #666;
+}
+input[type=text], select {
+  width: 100%;
+  padding: 10px 10px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 2px solid #cdcdcd;
+  box-sizing: border-box;
+}
+input[type=submit] {
+  width: 100%;
+  background-color: #efefef;
+  color: black;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: 2px solid #cdcdcd;
+  cursor: pointer;
+  font-weight:bold ;
+}
+fieldset{
+  width:100%;
+  color: black;
+  border:2px solid #cdcdcd;
+  padding: 20px 20px;
+  text-align:left;
+}
+legend{
+  font-size: larger;
+  font-weight: bold;
+}
 
+.tagging__title{
+  padding-top: 10px;
+  padding-bottom:10px;
+}
 /* ... your code here ... */
-
 
 /* ### TODO ### Styles for Discovery component */
 
 /* ... your code here ... */
 
+.discovery__title{
+  padding-top: 10px;
+  padding-bottom:10px;
+}
+.discovery__wrapper{
+  display: flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  padding-top:3%;
+  gap:3%;
+}
+.discovery__results{
+  display: flex;
+  flex-direction: column;
+  gap: 5%;
+}
+.discovery__results li{
+  
+  padding: 10px;
+  margin-bottom:5%;
+  color: #00B7FF;
+  background-color: #efefef;
+  display: inline-block;
+  border: 2px solid #cdcdcd;
+  box-sizing: border-box;
+  
+}
+.discovery__taglist span::after{ /*Zeilenumbruch nach span */
+  content: '\A';
+  white-space: pre;
+}
+.discovery__map{
+  display: flex;
+  flex-flow: nowrap column;
+  color:#666;
+  
+}
 
 /* ### TODO ### Styles for Footer Component */
-
+.footer{
+  padding: 3%;
+  text-align: left;
+  font-weight: bold;
+  border-top:2px solid #cdcdcd;
+  background-color: #efefef;
+}
 /* ... your code here ... */
 
 
