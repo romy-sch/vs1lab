@@ -1,0 +1,263 @@
+/*
+  File origin: VS1LAB A1b  
+
+  CSS style is BEM. Classes used for CSS, IDs for JavaScript querying (future use).
+  CSS variables used for clarity and themability (e.g. through SSR). 
+  Inherited box sizing used for ease of including 3rd party content-box components.
+*/
+
+/* Global styling */
+
+html {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+
+  /* This approach prevents issues with 3rd party content-box components */
+  box-sizing: inherit;
+}
+
+
+/* Variables (example: see declaration for "a" below) */
+
+:root {
+  --link-color: #0075a3;
+  --background-color: #cccccc;
+  --border-color: #919191;
+  --gray-color: #666;
+}
+
+
+/* HTML element styles */
+
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--link-color);
+}
+
+/* ### TODO ### Styles for other HTML elements */
+
+/* ... your code here ... */
+
+input {
+  display: block;
+  width: 100%;
+  padding: 6px;
+  margin-bottom: 6px;
+}
+
+label {
+  width: 100%;
+  padding: 3px;
+}
+
+fieldset {
+  border-style: solid;
+  border-color: rgb(82, 72, 72);
+  border-width: 1px;
+  border-radius: 5px;
+}
+
+legend {
+  font-weight: bold;
+  margin: 5px;
+}
+
+input[type=submit]{
+  background-color: var(--background-color);
+  border-style: solid;
+  border-radius: 3px;
+  border-color: var(--border-color);
+  margin-top: 8px;
+}
+
+input[type=submit]:hover{
+  background-color:rgb(102, 102, 102);
+}
+
+
+/* Grid styles (no changes required) */
+
+.row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.col-1 {
+  width: calc(8.33% - 1rem);
+}
+
+.col-2 {
+  width: calc(16.66% - 1rem);
+}
+
+.col-3 {
+  width: calc(25% - 1rem);
+}
+
+.col-4 {
+  width: calc(33.33% - 1rem);
+}
+
+.col-5 {
+  width: calc(41.66% - 1rem);
+}
+
+.col-6 {
+  width: calc(50% - 1rem);
+}
+
+.col-7 {
+  width: calc(58.33% - 1rem);
+}
+
+.col-8 {
+  width: calc(66.66% - 1rem);
+}
+
+.col-9 {
+  width: calc(75% - 1rem);
+}
+
+.col-10 {
+  width: calc(83.33% - 1rem);
+}
+
+.col-11 {
+  width: calc(91.66% - 1rem);
+}
+
+.col-12 {
+  width: calc(100% - 1rem);
+}
+
+
+/* ### TODO ### Styles for Header Component */
+header {
+  display: flex;
+  background-color: var(--background-color);
+  border-bottom: solid;
+  border-bottom-color: var(--border-color);
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+header img {
+  max-width: 40px;
+}
+/* ... your code here ... */
+
+
+/* ### TODO ### Styles for Main Component */
+main {
+  padding: 20px;
+}
+/* ... your code here ... */
+
+
+/* ### TODO ### Styles for Tagging component */
+
+form#tag-form {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+fieldset#fieldset_tagging {
+  margin-top: 5px;
+  width: 100%;
+  display: block;
+  padding: 5px;
+}
+
+/* ... your code here ... */
+
+
+/* ### TODO ### Styles for Discovery component */
+
+div.discovery__wrapper {
+  margin-top: 5px;
+  
+}
+
+fieldset#fieldset_search {
+  margin-top: 5px;
+  padding: 5px;
+  padding-right: 50%;
+}
+
+ul#discoveryResults {
+  list-style-type: none;
+}
+
+ul#discoveryResults li {
+  margin-top: 5px;
+  border-style: solid;
+  border-color: var(--border-color);
+  border-radius: 5px;
+  border-width: 2px;
+  padding: 5px;
+  background-color: var(--background-color);
+}
+
+img#mapView {
+  display: block;
+  width: 100%;
+  margin-top: 5px;
+}
+
+#map { 
+  height: 500px;
+}
+
+/* ... your code here ... */
+
+
+/* ### TODO ### Styles for Footer Component */
+
+footer {
+  display: flex;
+  background-color: var(--background-color);
+  border-top: solid;
+  border-top-color: var(--border-color);
+  padding: 10px;
+  justify-content: space-around;
+}
+
+/* ... your code here ... */
+
+
+/* ### TODO ### Media Queries */
+@media (max-width: 850px) {
+  .row {
+    flex-direction: column;
+  }
+
+  .col-3 {
+    width: 100%;
+  }
+
+  .col-4 {
+    width: 100%;
+  }
+
+  .col-8 {
+    width: 100%;
+  }
+
+  .col-9 {
+    width: 100%;
+  }
+}
+/* ... your code here ... */
