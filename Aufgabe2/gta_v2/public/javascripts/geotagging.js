@@ -10,8 +10,8 @@
 console.log("The geoTagging script is going to start...");
 
 /**
- * A class to help using the HTML5 Geolocation API.
- */
+  * A class to help using the HTML5 Geolocation API.
+  */
 class LocationHelper {
     // Location values for latitude and longitude are private properties to protect them from changes.
     #latitude = '';
@@ -29,15 +29,15 @@ class LocationHelper {
         return this.#longitude;
     }
 
-    /**
+   /**
     * Create LocationHelper instance if coordinates are known.
     * @param {string} latitude 
     * @param {string} longitude 
     */
-    constructor(latitude, longitude) {
-        this.#latitude = (parseFloat(latitude)).toFixed(5);
-        this.#longitude = (parseFloat(longitude)).toFixed(5);
-    }
+   constructor(latitude, longitude) {
+       this.#latitude = (parseFloat(latitude)).toFixed(5);
+       this.#longitude = (parseFloat(longitude)).toFixed(5);
+   }
 
     /**
      * The 'findLocation' method requests the current location details through the geolocation API.
@@ -62,15 +62,19 @@ class LocationHelper {
             // Pass the locationHelper object to the callback.
             callback(helper);
         }, (error) => {
-            alert(error.message)
+           alert(error.message)
         });
     }
 }
 
 /**
- * A class to help using the MapQuest map service.
+ * A class to help using the Leaflet map service.
  */
 class MapManager {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9bd4a691ca619c743c33c7c1709460bcdfb56a93
     #map
     #markers
 
