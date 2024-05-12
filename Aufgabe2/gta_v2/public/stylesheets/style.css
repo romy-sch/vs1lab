@@ -203,6 +203,9 @@ a {
   color:#666;
   
 }
+#map { 
+  height: 500px;
+}
 
 /* ### TODO ### Styles for Footer Component */
 
