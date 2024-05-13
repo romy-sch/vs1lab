@@ -71,10 +71,6 @@ class LocationHelper {
  * A class to help using the Leaflet map service.
  */
 class MapManager {
-<<<<<<< HEAD
-=======
-
->>>>>>> 9bd4a691ca619c743c33c7c1709460bcdfb56a93
     #map
     #markers
 
@@ -133,6 +129,10 @@ function updateLocation(){
         mapManager.initMap(callback.latitude, callback.longitude);
         mapManager.updateMarkers(callback.latitude, callback.longitude);
 
+        var mapView = document.getElementById("mapView");
+        mapView.remove();
+        var mapDescription = document.getElementsByClassName("discovery__map")[0].getElementsByTagName('p')[0];
+        mapDescription.remove();
     });
 }
 
