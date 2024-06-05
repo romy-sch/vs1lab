@@ -118,10 +118,10 @@ class MapManager {
  */
 // ... your code here ...
 function updateLocation(){
-    LocationHelper.findLocation((callback) =>{
+    LocationHelper.findLocation(function(location) {
    
-    let longitude = callback.longitude;
-    let latitude = callback.latitude; 
+    let longitude = location.longitude;
+    let latitude = location.latitude; 
     
     document.getElementById("latitude_input").value = latitude;
     document.getElementById("longitude_input").value = longitude;
@@ -138,7 +138,7 @@ function updateLocation(){
    document.getElementById("mapView").remove();
    
    document.getElementById("resultMapText").remove();
-   
+
    
 });
 }
