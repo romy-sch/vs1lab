@@ -48,7 +48,7 @@ class InMemoryGeoTagStore{
     }
 
     getNearbyGeoTags(latitude,longitude){
-        const radius=100;
+        const radius=5;
 
         function haversineDistanceFormula(lat1, lon1, lat2, lon2){
             // distance between latitudes and longitudes
