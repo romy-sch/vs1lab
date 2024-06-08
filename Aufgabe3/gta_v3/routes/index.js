@@ -46,7 +46,7 @@ geoTagStoreObject.populate(); //populate with given examples
 
 // TODO: extend the following route example if necessary
 router.get('/', (req, res) => {
-  res.render('index', {  taglist: [] })
+  res.render('index', {  taglist: [],  latvalue: "", lonvalue:"", mapGeoTagList: "" , search:""})
 });
 
 /**
@@ -77,9 +77,10 @@ router.post('/tagging',function(req, res){
   
   res.render("index", { 
       taglist: nearbyGeoTags,
-      //latvalue: req.body.latitude,
-      //lonvalue: req.body.longitude, 
-      mapGeoTagList: JSON.stringify(nearbyGeoTags)
+      latvalue: req.body.latitude,
+      lonvalue: req.body.longitude, 
+      mapGeoTagList: JSON.stringify(nearbyGeoTags),
+      search:""
     });   
 })
 /**
@@ -106,10 +107,10 @@ router.post('/discovery', function(req,res){
   let result= geoTagStoreObject.searchNearbyGeoTags(req.body.hiddenLat,req.body.hiddenLon,req.body.search);
   
   res.render("index", { 
-    
+    search:req.body.search,
     taglist: result,
-    //latvalue: req.body.hiddenLat,
-    //lonvalue: req.body.hiddenLon,
+    latvalue: req.body.hiddenLat,
+    lonvalue: req.body.hiddenLon,
     mapGeoTagList: JSON.stringify(result)
   }); 
 
