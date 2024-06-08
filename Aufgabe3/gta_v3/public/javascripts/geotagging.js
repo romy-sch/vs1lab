@@ -145,5 +145,5 @@ function updateLocation(){
 // Wait for the page to fully load its DOM content, then call updateLocation
 document.addEventListener("DOMContentLoaded", () => {
     updateLocation();
-    //alert("Please change the script 'geotagging.js'");
+    console.log("Location updated");
 });

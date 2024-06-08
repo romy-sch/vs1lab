@@ -41,9 +41,9 @@
                 <fieldset>
                     <legend>Add a new GeoTag</legend>
                     
-                    <label>Latitude: <input type="text" name="latitude" id="latitude_input" placeholder="e.g. 52.52000"  disabled /></label>
+                    <label>Latitude: <input type="text" name="latitude" id="latitude_input"   readonly /></label>
 
-                    <label>Longitude: <input type="text" name="longitude" id="longitude_input" placeholder="e.g. 13.40459" disabled /></label>
+                    <label>Longitude: <input type="text" name="longitude" id="longitude_input"  readonly /></label>
 
                     <label>Name: <input type="text" name="name" id="name_input" placeholder="e.g. Central Berlin" minlength=3 maxlength=10 pattern="[A-z]\w+ ?[A-z]\w+" required/></label>
 
@@ -72,8 +72,8 @@
 
                     <label>Search term or keywords:
                         <input type="text" name="search" id="search_input" placeholder="e.g. Berlin"  maxlength=11 /></label>
-                        <input type="hidden" id="hidden_latitude"/>
-                        <input type="hidden" id="hidden_longitude"/>
+                        <input type="hidden" name="hiddenLat" id="hidden_latitude"  />
+                        <input type="hidden" name="hiddenLon" id="hidden_longitude" />
                         <input type="submit" value="Search">
                     </div>
                 </fieldset>
@@ -93,7 +93,7 @@
 
                 <div class="discovery__map col-8">
                     <div id= map></div>
-                    <img src="./images/mapview.jpg" alt="a map with locations" id="mapView" />
+                    <img src="./images/mapview.jpg" alt="a map with locations" id="mapView"  />
                     <span id="resultMapText">Result map</span>
                 </div>
             </div>

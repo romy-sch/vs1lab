@@ -193,10 +193,7 @@ a {
   box-sizing: border-box;
   
 }
-.discovery__results span::after{ /*Zeilenumbruch nach span */
-  content: '\A';
-  white-space: pre;
-}
+
 .discovery__map{ /*Map+ ResultMAp Text untereinander*/
   display: flex;
   flex-flow: nowrap column;

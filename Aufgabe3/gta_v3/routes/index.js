@@ -21,7 +21,7 @@ const router = express.Router();
  */
 // eslint-disable-next-line no-unused-vars
 const GeoTag = require('../models/geotag');
-
+const GeoTagExamples = require('../models/geotag-examples');
 /**
  * The module "geotag-store" exports a class GeoTagStore. 
  * It provides an in-memory store for geotag objects.
@@ -29,7 +29,11 @@ const GeoTag = require('../models/geotag');
  * TODO: implement the module in the file "../models/geotag-store.js"
  */
 // eslint-disable-next-line no-unused-vars
-const GeoTagStore = require('../models/geotag-store');
+const InMemoryGeoTagStore = require('../models/geotag-store');
+console.log("Instantiating GeoTagStore...");
+let geoTagStoreObject = new InMemoryGeoTagStore();
+
+geoTagStoreObject.populate(); //populate with given examples
 
 /**
  * Route '/' for HTTP 'GET' requests.
@@ -42,7 +46,7 @@ const GeoTagStore = require('../models/geotag-store');
 
 // TODO: extend the following route example if necessary
 router.get('/', (req, res) => {
-  res.render('index', { taglist: [] })
+  res.render('index', {  taglist: [] })
 });
 
 /**
@@ -61,7 +65,23 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
-
+router.post('/tagging',function(req, res){
+ 
+  geoTagStoreObject.addGeoTag(req.body.name, req.body.latitude, req.body.longitude, req.body.hashtag);
+  
+  let nearbyGeoTags = geoTagStoreObject.getNearbyGeoTags(req.body.latitude, req.body.longitude);
+  
+  
+  
+  console.log(req.body);
+  
+  res.render("index", { 
+      taglist: nearbyGeoTags,
+      //latvalue: req.body.latitude,
+      //lonvalue: req.body.longitude, 
+      mapGeoTagList: JSON.stringify(nearbyGeoTags)
+    });   
+})
 /**
  * Route '/discovery' for HTTP 'POST' requests.
  * (http://expressjs.com/de/4x/api.html#app.post.method)
@@ -79,5 +99,19 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
+router.post('/discovery', function(req,res){
 
+  
+   
+  let result= geoTagStoreObject.searchNearbyGeoTags(req.body.hiddenLat,req.body.hiddenLon,req.body.search);
+  
+  res.render("index", { 
+    
+    taglist: result,
+    //latvalue: req.body.hiddenLat,
+    //lonvalue: req.body.hiddenLon,
+    mapGeoTagList: JSON.stringify(result)
+  }); 
+
+})
 module.exports = router;
