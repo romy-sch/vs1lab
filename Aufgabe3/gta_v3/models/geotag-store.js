@@ -51,8 +51,8 @@ class InMemoryGeoTagStore{
         const radius=5;
 
         function haversineDistanceFormula(lat1, lon1, lat2, lon2){
+            
             // distance between latitudes and longitudes
-       
             let distanceLat = (lat2 - lat1) * Math.PI / 180.0;
             let distanceLon = (lon2 - lon1) * Math.PI / 180.0;
            
@@ -74,27 +74,27 @@ class InMemoryGeoTagStore{
         
          return this.#geotagList.filter(tag=>//returns filtered array for set radius
             haversineDistanceFormula(latitude,longitude,tag.latitude,tag.longitude)<=radius
-             
-         );
+            );
         
     }
     
     searchNearbyGeoTags(latitude,longitude,keyword){
         
-        const nearbyTags=this.getNearbyGeoTags(latitude,longitude);
+        const nearbyTags = this.getNearbyGeoTags(latitude,longitude);
         
         const lowerKeyword = keyword.toLowerCase();
         
         const matching= nearbyTags.filter(tag =>
             tag.name.toLowerCase().includes(lowerKeyword) || tag.hashtag.toLowerCase().includes(lowerKeyword)
-            
-        );
-        return matching;
+            );
+        
+            return matching;
     }
     
     getStore(){
         return this.#geotagList;
     }
+
     populate(){
         const exampleList = GeoTagExamples.tagList;
 
@@ -104,7 +104,7 @@ class InMemoryGeoTagStore{
             
             this.addGeoTag(name, latitude, longitude, hashtag);
         });
-    console.log('GeoTags populated:', this.#geotagList); // Add this line to log the populated GeoTags
+    console.log('GeoTags populated:', this.#geotagList); 
 
     }
 }

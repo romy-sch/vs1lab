@@ -71,10 +71,6 @@ router.post('/tagging',function(req, res){
   
   let nearbyGeoTags = geoTagStoreObject.getNearbyGeoTags(req.body.latitude, req.body.longitude);
   
-  
-  
-  console.log(req.body);
-  
   res.render("index", { 
       taglist: nearbyGeoTags,
       latvalue: req.body.latitude,
@@ -102,8 +98,6 @@ router.post('/tagging',function(req, res){
 // TODO: ... your code here ...
 router.post('/discovery', function(req,res){
 
-  
-   
   let result= geoTagStoreObject.searchNearbyGeoTags(req.body.hiddenLat,req.body.hiddenLon,req.body.search);
   
   res.render("index", { 
