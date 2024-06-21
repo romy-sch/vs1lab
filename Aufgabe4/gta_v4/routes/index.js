@@ -28,7 +28,44 @@ const GeoTag = require('../models/geotag');
 const GeoTagStore = require('../models/geotag-store');
 
 // App routes (A3)
+const GeoTagExamples = require('../models/geotag-examples');
+console.log("Instantiating GeoTagStore...");
+let geoTagStoreObject = new InMemoryGeoTagStore();
 
+geoTagStoreObject.populate(); //populate with given examples
+
+
+
+//POST
+router.post('/tagging',function(req, res){
+ 
+  geoTagStoreObject.addGeoTag(req.body.name, req.body.latitude, req.body.longitude, req.body.hashtag);
+  
+  let nearbyGeoTags = geoTagStoreObject.getNearbyGeoTags(req.body.latitude, req.body.longitude);
+  
+  res.render("index", { 
+      taglist: nearbyGeoTags,
+      latvalue: req.body.latitude,
+      lonvalue: req.body.longitude, 
+      mapGeoTagList: JSON.stringify(nearbyGeoTags),
+      search:""
+    });   
+})
+
+
+router.post('/discovery', function(req,res){
+
+  let result= geoTagStoreObject.searchNearbyGeoTags(req.body.hiddenLat,req.body.hiddenLon,req.body.search);
+  
+  res.render("index", { 
+    search:req.body.search,
+    taglist: result,
+    latvalue: req.body.hiddenLat,
+    lonvalue: req.body.hiddenLon,
+    mapGeoTagList: JSON.stringify(result)
+  }); 
+
+})
 /**
  * Route '/' for HTTP 'GET' requests.
  * (http://expressjs.com/de/4x/api.html#app.get.method)
@@ -38,10 +75,11 @@ const GeoTagStore = require('../models/geotag-store');
  * As response, the ejs-template is rendered without geotag objects.
  */
 
-router.get('/', (req, res) => {
-  res.render('index', { taglist: [] })
-});
 
+//GET
+router.get('/', (req, res) => {
+  res.render('index', {  taglist: [],  latvalue: "", lonvalue:"", mapGeoTagList: "" , search:""})
+});
 // API routes (A4)
 
 /**
