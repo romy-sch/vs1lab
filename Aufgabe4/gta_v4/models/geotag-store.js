@@ -33,19 +33,32 @@ class InMemoryGeoTagStore{
     
     #geotagList=[];
    
-    addGeoTag(name, latitude, longitude, hashtag) {
-        const newGeoTag = new GeoTag(name, latitude, longitude, hashtag);
+    addGeoTag(name, latitude, longitude, hashtag,id) {
+        const newGeoTag = new GeoTag(name, latitude, longitude, hashtag,id);
         this.#geotagList.push(newGeoTag);
     }
 
    removeGeoTag(name){
-        for(let i=0;i<geotagList.length;i++){
-            if(name===geotagList[i].name) {
-                geotagList.splice(i,1);
+        for(let i=0;i<this.#geotagList.length;i++){
+            if(name===this.#geotagList[i].name) {
+                this.#geotagList.splice(i,1);
                 break;
             }
         };
     }
+    removeGeoTagById(inputId){
+        let currentId;
+        for(let i=0;i<this.#geotagList.length;i++){
+            currentId = this.#geotagList[i].id;
+            if(inputId.match(currentId)) {
+                this.#geotagList.splice(i,1);
+                break;
+            }
+        };
+        
+    }
+
+
 
     getNearbyGeoTags(latitude,longitude){
         const radius=5;
@@ -91,21 +104,43 @@ class InMemoryGeoTagStore{
             return matching;
     }
     
+    searchGeoTags(keyword){
+        const lowerKeyword = keyword.toLowerCase();
+        
+        const matching= this.#geotagList.filter(tag => //if it doesnt work this.# array name?
+            tag.name.toLowerCase().includes(lowerKeyword) || tag.hashtag.toLowerCase().includes(lowerKeyword)
+            );
+        
+            return matching;
+    }
+
+   
+    searchById(inputId){
+        let currentId;
+        for(let i=0;i<this.#geotagList.length;i++){
+            currentId = this.#geotagList[i].id;
+            if(inputId.match(currentId)) {
+                return this.#geotagList[i];
+            }
+        };
+    }
+
     getStore(){
         return this.#geotagList;
     }
 
-    populate(){
+    populate(idCounter){
         const exampleList = GeoTagExamples.tagList;
 
         
         exampleList.forEach(tag => {
-            const [name, latitude, longitude, hashtag] = tag;
-            
-            this.addGeoTag(name, latitude, longitude, hashtag);
+            const [name, latitude, longitude, hashtag, id] = tag;
+
+            this.addGeoTag(name, latitude, longitude, hashtag, id);
+            idCounter++;
         });
     console.log('GeoTags populated:', this.#geotagList); 
-
+        return idCounter;
     }
 }
 

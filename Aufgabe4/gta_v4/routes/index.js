@@ -25,14 +25,14 @@ const GeoTag = require('../models/geotag');
  * It provides an in-memory store for geotag objects.
  */
 // eslint-disable-next-line no-unused-vars
-const GeoTagStore = require('../models/geotag-store');
+const InMemoryGeoTagStore = require('../models/geotag-store');
 
 // App routes (A3)
 const GeoTagExamples = require('../models/geotag-examples');
 console.log("Instantiating GeoTagStore...");
 let geoTagStoreObject = new InMemoryGeoTagStore();
-
-geoTagStoreObject.populate(); //populate with given examples
+let idCounter= 0;
+idCounter = geoTagStoreObject.populate(idCounter); //populate with given examples + returns int idCounter
 
 
 
@@ -80,6 +80,7 @@ router.post('/discovery', function(req,res){
 router.get('/', (req, res) => {
   res.render('index', {  taglist: [],  latvalue: "", lonvalue:"", mapGeoTagList: "" , search:""})
 });
+
 // API routes (A4)
 
 /**
@@ -95,7 +96,51 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
+router.get('/api/geotags', (req, res) => {
 
+  let longitude= req.query.longitude;
+  let latitude= req.query.latitude;
+  let searchterm= req.query.search;
+  let result;
+
+  // Logging input parameters
+  console.log(`Query Parameters: longitude=${longitude}, latitude=${latitude}, searchterm=${searchterm}`);
+
+  // Convert longitude and latitude to numbers if they are defined
+  if (longitude !== undefined) longitude = parseFloat(longitude);
+  if (latitude !== undefined) latitude = parseFloat(latitude);
+
+  // set to null if undefined or empty
+  if (longitude === undefined || isNaN(longitude)) longitude = null;
+  if (latitude === undefined || isNaN(latitude)) latitude = null;
+  if (searchterm === undefined || searchterm.trim() === '') searchterm = null;
+  
+  
+  
+  //no searchterm or location
+  if( searchterm === null && (longitude === null && latitude === null)){
+    result= geoTagStoreObject.getStore();
+
+  }else if(searchterm !=null && (longitude === null && latitude === null)){ 
+    // with searchterm
+    result= geoTagStoreObject.searchGeoTags(searchterm);
+  
+  }else if((searchterm === null && (longitude != null && latitude != null))){
+    //only location
+    result = geoTagStoreObject.getNearbyGeoTags(latitude, longitude);
+ 
+
+  }else{
+    // loaction + searchterm
+    result = geoTagStoreObject.searchNearbyGeoTags(latitude, longitude, searchterm);
+  }
+  return res.json(result);
+  
+  
+  
+  
+
+});
 
 /**
  * Route '/api/geotags' for HTTP 'POST' requests.
@@ -109,7 +154,17 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
+router.post('/api/geotags', (req, res) => {
 
+  
+  geoTagStoreObject.addGeoTag(req.body.name, req.body.latitude, req.body.longitude, req.body.hashtag, idCounter );
+  
+  let tag = geoTagStoreObject.searchById(String(idCounter));
+  idCounter++;
+   res.header("Location", `http://localhost:3000/api/geotags/${idCounter}`);
+ 
+    return res.send(JSON.stringify(tag));
+});
 
 /**
  * Route '/api/geotags/:id' for HTTP 'GET' requests.
@@ -122,7 +177,13 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
+router.get('/api/geotags/:id', (req, res) => {
 
+  let id= req.params.id;
+  let searchedTag = geoTagStoreObject.searchById(id);
+  
+  return res.send(JSON.stringify(searchedTag));
+});
 
 /**
  * Route '/api/geotags/:id' for HTTP 'PUT' requests.
@@ -139,7 +200,16 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
+router.put('/api/geotags/:id', (req, res) => {
 
+  let id= req.params.id;
+  geoTagStoreObject.removeGeoTagById(id);
+
+  let newTag= geoTagStoreObject.addGeoTag(req.body.name,req.body.latitude,req.body.longitude,req.body.hashtag,id);
+  
+  return res.send(JSON.stringify(geoTagStoreObject.getStore()));
+ 
+});
 
 /**
  * Route '/api/geotags/:id' for HTTP 'DELETE' requests.
@@ -154,4 +224,23 @@ router.get('/', (req, res) => {
 
 // TODO: ... your code here ...
 
+router.delete('/api/geotags/:id', (req, res) => {
+  let id = req.params.id;
+
+  console.log(`Searching for geotag with id: ${id}`);
+  
+  let deletedTag = geoTagStoreObject.searchById(id);
+
+  console.log(`Found geotag: ${JSON.stringify(deletedTag)}`);
+
+  if (!deletedTag) {
+      return res.status(404).json({ error: 'Geotag not found' });
+  }
+
+  geoTagStoreObject.removeGeoTagById(id);
+
+  return res.json(deletedTag);
+});
 module.exports = router;
+
+

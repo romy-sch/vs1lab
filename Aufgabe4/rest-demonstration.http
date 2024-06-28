@@ -1,0 +1,47 @@
+### GET 
+GET http://localhost:3000/api/geotags
+
+### GET with searchterm
+GET http://localhost:3000/api/geotags?search=campus
+
+### doesn work yet
+GET http://localhost:3000/api/geotags?search=campus&longitude=49.0&latitude=8.0 
+
+### doesnt wokr yet
+GET http://localhost:3000/api/geotags?longitude=49.0&latitude=8.0
+
+### POST
+POST http://localhost:3000/api/geotags
+Content-Type: application/json
+
+{
+    "name": "Mensa Moltke",
+    "latitude":"49.01485",
+    "longitude":"8.394031",
+    "hashtag":"#food"
+}
+###
+DELETE http://localhost:3000/api/geotags/4
+
+###
+
+//id 2 Austauschen
+GET http://localhost:3000/api/geotags/2
+###
+
+PUT http://localhost:3000/api/geotags/2
+Content-Type: application/json
+
+{
+    "name": "Mensa Moltke",
+    "latitude":"49.01485",
+    "longitude":"8.394031",
+    "hashtag":"#food"
+}
+###
+GET http://localhost:3000/api/geotags
+
+
+
+
+
