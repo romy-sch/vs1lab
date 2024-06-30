@@ -1,0 +1,58 @@
+@baseUrl = http://localhost:3000/api
+
+### Get all GeoTags
+GET {{baseUrl}}/geotags
+
+### Get nearby GeoTags
+GET {{baseUrl}}/geotags?latitude=49.014993&longitude=8.390049
+
+### Search nearby GeoTags
+GET {{baseUrl}}/geotags?latitude=49.014993&longitude=8.390049&search=campus
+
+### Search only by tags/name
+GET {{baseUrl}}/geotags?search=campus
+
+### Create a new GeoTag
+POST {{baseUrl}}/geotags
+Content-Type: application/json
+
+{
+  "name": "Test Location",
+  "latitude": 49.015,
+  "longitude": 8.39,
+  "hashtag": "#test"
+}
+
+### Get a specific GeoTag by name
+GET {{baseUrl}}/geotags/11
+
+### Update a GeoTag
+PUT {{baseUrl}}/geotags/11
+Content-Type: application/json
+
+{
+  "name": "Neuer Name",
+  "latitude": 49.016,
+  "longitude": 8.391,
+  "hashtag": "#updated"
+}
+
+### Delete a GeoTag
+DELETE {{baseUrl}}/geotags/11
+
+### Try to get a non-existent GeoTag
+GET {{baseUrl}}/geotags/42
+
+### Try to update a non-existent GeoTag
+PUT {{baseUrl}}/geotags/42
+Content-Type: application/json
+
+{
+  "name": "Neuer Test", 
+  "latitude": 49.0,
+  "longitude": 8.0,
+  "hashtag": "#nonexistent"
+}
+
+### Try to delete a non-existent GeoTag
+DELETE {{baseUrl}}/geotags/42

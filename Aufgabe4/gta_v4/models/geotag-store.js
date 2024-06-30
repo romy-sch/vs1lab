@@ -32,16 +32,31 @@ class InMemoryGeoTagStore{
     // TODO: ... your code here ...
     
     #geotagList=[];
+    #idCounter=0; 
    
-    addGeoTag(name, latitude, longitude, hashtag) {
-        const newGeoTag = new GeoTag(name, latitude, longitude, hashtag);
+    addGeoTag(name, latitude, longitude, hashtag, id) {
+        const newGeoTag = new GeoTag(name, latitude, longitude, hashtag, id);
         this.#geotagList.push(newGeoTag);
     }
 
+    getNextUniqueId() {
+        this.#idCounter++; 
+        return this.#idCounter-1; 
+    }
+
    removeGeoTag(name){
-        for(let i=0;i<geotagList.length;i++){
-            if(name===geotagList[i].name) {
-                geotagList.splice(i,1);
+        for(let i=0;i<this.#geotagList.length;i++){
+            if(name===this.#geotagList[i].name) {
+                this.#geotagList.splice(i,1);
+                break;
+            }
+        };
+    }
+
+    removeGeoTagById(id) {
+        for(let i=0;i<this.#geotagList.length;i++){
+            if(id===this.#geotagList[i].id) {
+                this.#geotagList.splice(i,1);
                 break;
             }
         };
@@ -77,7 +92,16 @@ class InMemoryGeoTagStore{
             );
         
     }
-    
+  
+    searchGeoTags(keyword){        
+        const lowerKeyword = keyword.toLowerCase();
+        const matching= this.#geotagList.filter(tag =>
+            tag.name.toLowerCase().includes(lowerKeyword) || tag.hashtag.toLowerCase().includes(lowerKeyword)
+            );
+        
+        return matching;
+    }
+
     searchNearbyGeoTags(latitude,longitude,keyword){
         
         const nearbyTags = this.getNearbyGeoTags(latitude,longitude);
@@ -102,7 +126,8 @@ class InMemoryGeoTagStore{
         exampleList.forEach(tag => {
             const [name, latitude, longitude, hashtag] = tag;
             
-            this.addGeoTag(name, latitude, longitude, hashtag);
+            this.addGeoTag(name, latitude, longitude, hashtag, this.#idCounter);
+            this.#idCounter++;
         });
     console.log('GeoTags populated:', this.#geotagList); 
 

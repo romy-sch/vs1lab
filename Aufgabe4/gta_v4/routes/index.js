@@ -25,7 +25,7 @@ const GeoTag = require('../models/geotag');
  * It provides an in-memory store for geotag objects.
  */
 // eslint-disable-next-line no-unused-vars
-const GeoTagStore = require('../models/geotag-store');
+const InMemoryGeoTagStore = require('../models/geotag-store');
 
 // App routes (A3)
 const GeoTagExamples = require('../models/geotag-examples');
@@ -95,7 +95,25 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
+// GET /api/geotags
+router.get('/api/geotags', (req, res) => {
+  const { latitude, longitude, search } = req.query;
+  let results;
 
+  if (latitude && longitude) {
+    if (search) {
+      results = geoTagStoreObject.searchNearbyGeoTags(latitude, longitude, search); 
+    } else {
+      results = geoTagStoreObject.getNearbyGeoTags(latitude, longitude);
+    }
+  } else if (search) {
+    results = geoTagStoreObject.searchGeoTags(search);
+  }
+  else {
+    results = geoTagStoreObject.getStore();
+  }
+  res.json(results);
+});
 
 /**
  * Route '/api/geotags' for HTTP 'POST' requests.
@@ -109,6 +127,18 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
+// POST /api/geotags
+router.post('/api/geotags', (req, res) => {
+  const { name, latitude, longitude, hashtag } = req.body;
+  const id = geoTagStoreObject.getNextUniqueId(); 
+  geoTagStoreObject.addGeoTag(name, latitude, longitude, hashtag, id);
+  const newTag = geoTagStoreObject.getStore().find(tag => 
+    tag.id === id
+  );
+  res.status(201)
+     .location(`/api/geotags/${encodeURIComponent(newTag.id)}`)
+     .json(newTag);
+});
 
 
 /**
@@ -122,7 +152,16 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
-
+// GET /api/geotags/:id
+router.get('/api/geotags/:id', (req, res) => {
+  const id = parseInt(req.params.id); 
+  const tag = geoTagStoreObject.getStore().find(tag => tag.id === id);
+  if (tag) {
+    res.json(tag);
+  } else {
+    res.status(404).json({ error: 'GeoTag mit Id nicht gefunden' });
+  }
+});
 
 /**
  * Route '/api/geotags/:id' for HTTP 'PUT' requests.
@@ -139,7 +178,20 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
-
+// PUT /api/geotags/:id
+router.put('/api/geotags/:id', (req, res) => {
+  const { name, latitude, longitude, hashtag } = req.body;
+  const id = parseInt(req.params.id); 
+  const oldTag = geoTagStoreObject.getStore().find(tag => tag.id === id);
+  if (oldTag) {
+    geoTagStoreObject.removeGeoTagById(id);
+    geoTagStoreObject.addGeoTag(name, latitude, longitude, hashtag, id);
+    const updatedTag = geoTagStoreObject.getStore().find(tag => tag.id === id);
+    res.json(updatedTag);
+  } else {
+    res.status(404).json({ error: 'GeoTag mit Id nicht gefunden' });
+  }
+});
 
 /**
  * Route '/api/geotags/:id' for HTTP 'DELETE' requests.
@@ -153,5 +205,16 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
+// DELETE /api/geotags/:id
+router.delete('/api/geotags/:id', (req, res) => {
+  const id = parseInt(req.params.id); 
+  const deletedTag = geoTagStoreObject.getStore().find(tag => tag.id === id);
+  if (deletedTag) {
+    geoTagStoreObject.removeGeoTagById(id);
+    res.json(deletedTag);
+  } else {
+    res.status(404).json({ error: 'GeoTag mit Id nicht gefunden' });
+  }
+});
 
 module.exports = router;
