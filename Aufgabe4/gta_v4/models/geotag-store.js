@@ -32,13 +32,16 @@ class InMemoryGeoTagStore{
     // TODO: ... your code here ...
     
     #geotagList=[];
+    // added unique key
     #idCounter=0; 
    
+    // A4.1: id added as parameter
     addGeoTag(name, latitude, longitude, hashtag, id) {
         const newGeoTag = new GeoTag(name, latitude, longitude, hashtag, id);
         this.#geotagList.push(newGeoTag);
     }
 
+    // A4.1 return next unique identifier
     getNextUniqueId() {
         this.#idCounter++; 
         return this.#idCounter-1; 
@@ -53,6 +56,7 @@ class InMemoryGeoTagStore{
         };
     }
 
+    // 4.1
     removeGeoTagById(id) {
         for(let i=0;i<this.#geotagList.length;i++){
             if(id===this.#geotagList[i].id) {
@@ -93,9 +97,10 @@ class InMemoryGeoTagStore{
         
     }
   
+    // 4.1 added to allow keyword search
     searchGeoTags(keyword){        
         const lowerKeyword = keyword.toLowerCase();
-        const matching= this.#geotagList.filter(tag =>
+        const matching = this.#geotagList.filter(tag =>
             tag.name.toLowerCase().includes(lowerKeyword) || tag.hashtag.toLowerCase().includes(lowerKeyword)
             );
         
@@ -126,6 +131,7 @@ class InMemoryGeoTagStore{
         exampleList.forEach(tag => {
             const [name, latitude, longitude, hashtag] = tag;
             
+            // A4.1 modified to include id counter
             this.addGeoTag(name, latitude, longitude, hashtag, this.#idCounter);
             this.#idCounter++;
         });

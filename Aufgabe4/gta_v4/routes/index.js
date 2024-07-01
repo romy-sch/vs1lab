@@ -95,7 +95,8 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
-// GET /api/geotags
+
+// 4.1 GET: return list of all geotags matching query
 router.get('/api/geotags', (req, res) => {
   const { latitude, longitude, search } = req.query;
   let results;
@@ -127,11 +128,13 @@ router.get('/api/geotags', (req, res) => {
  */
 
 // TODO: ... your code here ...
-// POST /api/geotags
+
+// 4.2 POST: create a new geotag and return it
 router.post('/api/geotags', (req, res) => {
   const { name, latitude, longitude, hashtag } = req.body;
   const id = geoTagStoreObject.getNextUniqueId(); 
   geoTagStoreObject.addGeoTag(name, latitude, longitude, hashtag, id);
+  // find geotag to return as json object
   const newTag = geoTagStoreObject.getStore().find(tag => 
     tag.id === id
   );
@@ -152,7 +155,8 @@ router.post('/api/geotags', (req, res) => {
  */
 
 // TODO: ... your code here ...
-// GET /api/geotags/:id
+
+// 4.1 GET: search geotag by id and return it
 router.get('/api/geotags/:id', (req, res) => {
   const id = parseInt(req.params.id); 
   const tag = geoTagStoreObject.getStore().find(tag => tag.id === id);
@@ -178,7 +182,8 @@ router.get('/api/geotags/:id', (req, res) => {
  */
 
 // TODO: ... your code here ...
-// PUT /api/geotags/:id
+
+// 4.1 PUT: looks for geotag with id, deletes it, adds geotag with same id and return it
 router.put('/api/geotags/:id', (req, res) => {
   const { name, latitude, longitude, hashtag } = req.body;
   const id = parseInt(req.params.id); 
@@ -205,7 +210,8 @@ router.put('/api/geotags/:id', (req, res) => {
  */
 
 // TODO: ... your code here ...
-// DELETE /api/geotags/:id
+
+// 4.1 DELETE: delete geotag by id and returns it
 router.delete('/api/geotags/:id', (req, res) => {
   const id = parseInt(req.params.id); 
   const deletedTag = geoTagStoreObject.getStore().find(tag => tag.id === id);

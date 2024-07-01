@@ -15,20 +15,22 @@ console.log("The geoTagging script is going to start...");
  * It is called once the page has been fully loaded.
  */
 // ... your code here ...
+let mapManager; 
+
 function updateLocation(){
     if(!document.getElementById("latitude_input").value){
         
         LocationHelper.findLocation(function(location) {
    
-        let longitude = location.longitude;
-        let latitude = location.latitude; 
-    
-        document.getElementById("latitude_input").value = latitude;
-        document.getElementById("longitude_input").value = longitude;
+            let longitude = location.longitude;
+            let latitude = location.latitude; 
+        
+            document.getElementById("latitude_input").value = latitude;
+            document.getElementById("longitude_input").value = longitude;
 
-        document.getElementById("hidden_latitude").value = latitude;
-        document.getElementById("hidden_longitude").value = longitude;
-        mapUpdate(latitude, longitude);
+            document.getElementById("hidden_latitude").value = latitude;
+            document.getElementById("hidden_longitude").value = longitude;
+            mapUpdate(latitude, longitude);
 
         });
     
@@ -40,16 +42,14 @@ function updateLocation(){
 }
 
 function mapUpdate(latitude, longitude){
-
-    let mapManager = new MapManager;
+    mapManager = new MapManager;
    
     document.getElementById("mapView").remove();
     document.getElementById("resultMapText").remove();
 
     mapManager.initMap(latitude,longitude);
-   
-    let tagsAround= document.getElementById("map").getAttribute("data-tags");
 
+    let tagsAround= document.getElementById("map").getAttribute("data-tags");
     if(tagsAround==""){
 
         mapManager.updateMarkers(latitude,longitude);
@@ -57,7 +57,7 @@ function mapUpdate(latitude, longitude){
         
         tagsAround= JSON.parse(tagsAround);
         mapManager.updateMarkers(latitude,longitude,tagsAround);
-        }
+    }
 }  
    
  
@@ -68,16 +68,20 @@ document.addEventListener("DOMContentLoaded", () => {
     
     updateLocation();
     console.log("Location updated");
-    
+
+    // 4.2
+    // references to required DOM elements
     const tagForm = document.getElementById('tag-form');
     const discoveryForm = document.getElementById('discoveryFilterForm');
     const discoveryResults = document.getElementById('discoveryResults');
 
-    // Event Listener für das Tagging-Formular
+    // Event Listener for tag form
     tagForm.addEventListener('submit', async (e) => {
+        // prevent default submitting of form
         e.preventDefault();
         
         const formData = new FormData(tagForm);
+        // convert to javascript object to easily use stringify for JSON format
         const tagData = Object.fromEntries(formData.entries());
 
         try {
@@ -93,29 +97,30 @@ document.addEventListener("DOMContentLoaded", () => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
+            // debug info
             const result = await response.json();
             console.log('Neuer GeoTag erstellt:', result);
 
-            // Aktualisiere die Anzeige
+            // update results shown
             updateDiscoveryResults();
             
-            // Formular zurücksetzen
-            tagForm.reset();
+            // reset form
+            // tagForm.reset();
         } catch (error) {
             console.error('Fehler beim Erstellen des GeoTags:', error);
         }
     });
 
-    // Event Listener für das Discovery-Formular
+    // Event Listener for discovery form
     discoveryForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         const formData = new FormData(discoveryForm);
         const searchParams = new URLSearchParams();
 
-        // Durchlaufen Sie alle Formulareinträge
+        // Iterate over entries
         for (let [key, value] of formData.entries()) {
-            // Umbenennen von hiddenLat zu latitude und hiddenLon zu longitude
+            // Workaround for REST API: rename hiddenLat and hiddenLon
             if (key === 'hiddenLat') {
                 searchParams.append('latitude', value);
             } else if (key === 'hiddenLon') {
@@ -139,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Funktion zum Aktualisieren der Ergebnisliste
+    // update result list
     async function updateDiscoveryResults(results) {
         if (!results) {
             const latitude = document.getElementById('hidden_latitude').value;
@@ -155,8 +160,16 @@ document.addEventListener("DOMContentLoaded", () => {
             discoveryResults.appendChild(li);
         });
 
-        // Hier sollten Sie auch die Karte aktualisieren
-        // updateMap(results);
+        // Update map
+        // const encodedResults = JSON.stringify(results);
+        // console.log('Encoded results:', encodedResults);
+        // const map = document.getElementById('map'); 
+        // map.setAttribute('data-tags', encodedResults);
+        const latitude = document.getElementById('hidden_latitude').value;
+        const longitude = document.getElementById('hidden_longitude').value;
+        if(latitude && longitude) {
+            mapManager.updateMarkers(parseFloat(latitude), parseFloat(longitude), results);  
+        } 
     }
 
     // Initial die Ergebnisse laden

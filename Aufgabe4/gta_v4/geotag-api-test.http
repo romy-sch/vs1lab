@@ -1,5 +1,6 @@
 @baseUrl = http://localhost:3000/api
 
+### 4.1 Tests GET
 ### Get all GeoTags
 GET {{baseUrl}}/geotags
 
@@ -12,6 +13,7 @@ GET {{baseUrl}}/geotags?latitude=49.014993&longitude=8.390049&search=campus
 ### Search only by tags/name
 GET {{baseUrl}}/geotags?search=campus
 
+### 4.1 Test POST
 ### Create a new GeoTag
 POST {{baseUrl}}/geotags
 Content-Type: application/json
@@ -23,9 +25,11 @@ Content-Type: application/json
   "hashtag": "#test"
 }
 
-### Get a specific GeoTag by name
+### 4.1 Test GET by id; check if with POST newly created ressource exists
+### Get a specific GeoTag by id
 GET {{baseUrl}}/geotags/11
 
+### 4.1 Test PUT
 ### Update a GeoTag
 PUT {{baseUrl}}/geotags/11
 Content-Type: application/json
@@ -37,9 +41,11 @@ Content-Type: application/json
   "hashtag": "#updated"
 }
 
+### 4.1 Test DELETE
 ### Delete a GeoTag
 DELETE {{baseUrl}}/geotags/11
 
+### 4.1 Tests with nonexistent geotags
 ### Try to get a non-existent GeoTag
 GET {{baseUrl}}/geotags/42
 
